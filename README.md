@@ -7,3 +7,48 @@ md5
 ===
 
 It is one of the most renowned mathematical function that is used for password hashing.
+
+```
+const md5 = require('md5');
+
+// Then use wherever you need to has the password..
+// const password = md5(mypassword);
+
+app.post('/register', (req, res) => {
+    const newUser = new User({
+        email: req.body.username,
+        password: md5(req.body.password)
+    });
+
+    newUser.save((err) => {
+        if(err){
+            console.error(err);
+        } else {
+            console.log('New user added!');
+            res.render('secrets');
+        }
+    });
+});
+
+app.post('/login', (req, res) => {
+    const email = req.body.username;
+    const password = md5(req.body.password);
+
+    User.findOne({email: email}, (err, user) => {
+        if(err) {
+            console.error(err);
+        } else {
+            if(user){
+                if(user.password === password) {
+                    console.log('You are already registered!');
+                    res.render('secrets');
+                } else {
+                    console.error('Wrong password!');
+                }
+            } else {
+                console.error('You are never registered!');
+            }
+        }
+    });
+});
+```
