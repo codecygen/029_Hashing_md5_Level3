@@ -60,6 +60,8 @@ app.post('/register', (req, res) => {
     });
 });
 
+// Do not use findOne method with 2 parameters, this is not how it is documented. 
+
 // app.post('/login', (req, res) => {
 //     const email = req.body.username;
 //     const password = req.body.password;
